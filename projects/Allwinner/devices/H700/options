@@ -52,19 +52,19 @@
     GRAPHIC_DRIVERS="panfrost"
 
   # OpenGL(X) implementation to use (mesa / no)
-    OPENGL="mesa"
+    OPENGL="no"
 
   # For maximum cross compatbility
-    PREFER_GLES="yes"
+    PREFER_GLES="no"
 
   # OpenGL-ES implementation to use (mesa / no)
     OPENGLES="mesa"
 
   # Displayserver to use (wl / no)
-    DISPLAYSERVER="wl"
+    DISPLAYSERVER="no"
 
   # Windowmanager to use (weston / swaywm-env / no)
-    WINDOWMANAGER="swaywm-env"
+    WINDOWMANAGER="no"
   
   # kernel serial console
     EXTRA_CMDLINE="rootwait earlycon=uart,mmio32,0x5000000 console=ttyS0,115200"
