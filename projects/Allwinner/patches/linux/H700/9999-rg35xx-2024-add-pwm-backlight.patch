@@ -1,44 +1,31 @@
-From 7fe28a4236656f5ce0137f9915830c8545b3a4e7 Mon Sep 17 00:00:00 2001
+From d5c1b26a0674d73e805011e4379682cd0b0b7249 Mon Sep 17 00:00:00 2001
 From: Philippe Simons <simons.philippe@gmail.com>
-Date: Sun, 21 Jul 2024 22:55:17 +0200
-Subject: [PATCH 1/1] rg35xx-2024 add pwm backlight
+Date: Sat, 27 Jul 2024 18:43:36 +0200
+Subject: [PATCH 1/1] rg35xx 2024: add pwm backlight
 
 ---
- .../sun50i-h700-anbernic-rg35xx-2024.dts      | 26 ++++++++++++++-----
- 1 file changed, 20 insertions(+), 6 deletions(-)
+ .../sun50i-h700-anbernic-rg35xx-2024.dts      | 30 +++++++++++--------
+ 1 file changed, 17 insertions(+), 13 deletions(-)
 
 diff --git a/arch/arm64/boot/dts/allwinner/sun50i-h700-anbernic-rg35xx-2024.dts b/arch/arm64/boot/dts/allwinner/sun50i-h700-anbernic-rg35xx-2024.dts
-index 0e9f926979c0..263ccba5d303 100644
+index 24e302ca2b2a..5118a224f14a 100644
 --- a/arch/arm64/boot/dts/allwinner/sun50i-h700-anbernic-rg35xx-2024.dts
 +++ b/arch/arm64/boot/dts/allwinner/sun50i-h700-anbernic-rg35xx-2024.dts
-@@ -21,12 +21,6 @@ aliases {
- 		serial0 = &uart0;
+@@ -22,9 +22,10 @@ aliases {
  	};
  
--	backlight: backlight {
+ 	backlight: backlight {
 -		compatible = "gpio-backlight";
 -		gpios = <&pio 3 28 GPIO_ACTIVE_HIGH>; // PD28
 -		default-on;
--	};
--
- 	chosen {
- 		stdout-path = "serial0:115200n8";
- 	};
-@@ -185,6 +179,13 @@ reg_lcd: regulator-gpio-lcd-vdd {
- 		enable-active-high;
- 	};
- 
-+	backlight: backlight {
 +		compatible = "pwm-backlight";
 +		pwms = <&pwm 0 50000 0>;
 +		pinctrl-0 = <&lcd_backlight_pin>;
 +		pinctrl-names = "default";
-+	};
-+
- 	spi_lcd: spi {
- 		compatible = "spi-gpio";
- 		#address-cells = <1>;
-@@ -415,6 +416,19 @@ &usbphy {
+ 	};
+ 
+ 	battery: battery {
+@@ -460,6 +451,19 @@ &usbphy {
  	status = "okay";
  };
  
@@ -55,9 +42,9 @@ index 0e9f926979c0..263ccba5d303 100644
 +	status = "okay";
 +};
 +
- &tcon_lcd0 {
- 	status = "okay";
- };
+ /* the AXP717 has USB type-C role switch functionality, not yet described by the binding */
+ &usbotg {
+ 	dr_mode = "peripheral";   /* USB type-C receptable */
 -- 
 2.34.1
 

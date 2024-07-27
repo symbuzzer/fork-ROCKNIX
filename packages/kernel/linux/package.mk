@@ -30,8 +30,8 @@ case ${DEVICE} in
     PKG_GIT_CLONE_BRANCH="rk-5.10-rkr6"
     ;;
   H700)
-    PKG_VERSION="e3c121d666583f4cf32883b123ef84166b4998f6"
-    PKG_URL="https://git.sr.ht/~tokyovigilante/linux/archive/${PKG_VERSION}.tar.gz"
+    PKG_VERSION="6.11-rc3"
+    PKG_URL="https://git.kernel.org/torvalds/t/linux-6.11-rc3.tar.gz"
     PKG_PATCH_DIRS+=" mainline"
     ;;
   *)

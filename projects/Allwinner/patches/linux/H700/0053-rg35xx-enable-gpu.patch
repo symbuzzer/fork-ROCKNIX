@@ -1,0 +1,52 @@
+--- a/arch/arm64/boot/dts/allwinner/sun50i-h700-anbernic-rg35xx-2024.dts
++++ b/arch/arm64/boot/dts/allwinner/sun50i-h700-anbernic-rg35xx-2024.dts
+@@ -225,12 +225,48 @@
+ 			};
+ 		};
+ 	};
++
++	gpu_opp_table: opp-table-1 {
++		compatible = "operating-points-v2";
++
++		opp-420000000 {
++			opp-hz = /bits/ 64 <420000000>;
++			opp-microvolt = <940000>;
++		};
++		opp-456000000 {
++			opp-hz = /bits/ 64 <456000000>;
++			opp-microvolt = <940000>;
++		};
++		opp-504000000 {
++			opp-hz = /bits/ 64 <504000000>;
++			opp-microvolt = <940000>;
++		};
++		opp-552000000 {
++			opp-hz = /bits/ 64 <552000000>;
++			opp-microvolt = <940000>;
++		};
++		opp-600000000 {
++			opp-hz = /bits/ 64 <600000000>;
++			opp-microvolt = <940000>;
++		};
++		//opp-648000000 {
++		//	opp-hz = /bits/ 64 <648000000>;
++		//	opp-microvolt = <940000>;
++		//};
++	};
+ };
+ 
+ &cpu0 {
+ 	cpu-supply = <&reg_dcdc1>;
+ };
+ 
++&gpu {
++	mali-supply = <&reg_dcdc2>;
++	power-domains = <&r_ccu 0>;
++	operating-points-v2 = <&gpu_opp_table>;
++	status = "okay";
++};
++
+ &de {
+ 	status = "okay";
+ };
+

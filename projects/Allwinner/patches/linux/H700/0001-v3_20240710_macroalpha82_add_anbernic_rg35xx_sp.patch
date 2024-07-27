@@ -1,0 +1,209 @@
+From git@z Thu Jan  1 00:00:00 1970
+Subject: [PATCH v3 1/4] dt-bindings: arm: sunxi: Add Anbernic RG35XXSP
+From: Chris Morgan <macromorgan@hotmail.com>
+Date: Wed, 10 Jul 2024 18:17:15 -0500
+Message-Id: <20240710231718.106894-2-macroalpha82@gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+
+Add the Anbernic RG35XXSP variant device.
+
+The Anbernic RG35XXSP is almost identical to the RG35XX-Plus, but in a
+clamshell form-factor with an external RTC and a lid switch.
+
+Signed-off-by: Chris Morgan <macromorgan@hotmail.com>
+Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+---
+ Documentation/devicetree/bindings/arm/sunxi.yaml | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
+
+diff --git a/Documentation/devicetree/bindings/arm/sunxi.yaml b/Documentation/devicetree/bindings/arm/sunxi.yaml
+index c2a158b75e49..60b11b289535 100644
+--- a/Documentation/devicetree/bindings/arm/sunxi.yaml
++++ b/Documentation/devicetree/bindings/arm/sunxi.yaml
+@@ -61,14 +61,19 @@ properties:
+           - const: anbernic,rg35xx-2024
+           - const: allwinner,sun50i-h700
+ 
++      - description: Anbernic RG35XX H
++        items:
++          - const: anbernic,rg35xx-h
++          - const: allwinner,sun50i-h700
++
+       - description: Anbernic RG35XX Plus
+         items:
+           - const: anbernic,rg35xx-plus
+           - const: allwinner,sun50i-h700
+ 
+-      - description: Anbernic RG35XX H
++      - description: Anbernic RG35XX SP
+         items:
+-          - const: anbernic,rg35xx-h
++          - const: anbernic,rg35xx-sp
+           - const: allwinner,sun50i-h700
+ 
+       - description: Amarula A64 Relic
+-- 
+2.34.1
+
+From git@z Thu Jan  1 00:00:00 1970
+Subject: [PATCH v3 2/4] arm64: dts: allwinner: h616: Add r_i2c pinctrl
+ nodes
+From: Chris Morgan <macromorgan@hotmail.com>
+Date: Wed, 10 Jul 2024 18:17:16 -0500
+Message-Id: <20240710231718.106894-3-macroalpha82@gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+
+Add pinctrl nodes for the r_i2c node. Without the pinmux defined the
+r_i2c bus may fail to work, possibly if the bootloader uses rsb mode
+for the PMIC.
+
+Fixes: 0d17c8651188 ("arm64: dts: allwinner: Add Allwinner H616 .dtsi file")
+
+Reviewed-by: Andre Przywara <andre.przywara@arm.com>
+Signed-off-by: Chris Morgan <macromorgan@hotmail.com>
+Fixes: 0d17c8651188 ("arm64: dts: allwinner: Add Allwinner H616 .dtsi file")
+---
+ arch/arm64/boot/dts/allwinner/sun50i-h616.dtsi | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/arch/arm64/boot/dts/allwinner/sun50i-h616.dtsi b/arch/arm64/boot/dts/allwinner/sun50i-h616.dtsi
+index 921d5f61d8d6..e31945c3895e 100644
+--- a/arch/arm64/boot/dts/allwinner/sun50i-h616.dtsi
++++ b/arch/arm64/boot/dts/allwinner/sun50i-h616.dtsi
+@@ -837,6 +837,8 @@ r_i2c: i2c@7081400 {
+ 			dmas = <&dma 48>, <&dma 48>;
+ 			dma-names = "rx", "tx";
+ 			resets = <&r_ccu RST_R_APB2_I2C>;
++			pinctrl-names = "default";
++			pinctrl-0 = <&r_i2c_pins>;
+ 			status = "disabled";
+ 			#address-cells = <1>;
+ 			#size-cells = <0>;
+-- 
+2.34.1
+
+From git@z Thu Jan  1 00:00:00 1970
+Subject: [PATCH v3 3/4] arm64: dts: allwinner: h616: Change RG35XX Series
+ from r_rsb to r_i2c
+From: Chris Morgan <macromorgan@hotmail.com>
+Date: Wed, 10 Jul 2024 18:17:17 -0500
+Message-Id: <20240710231718.106894-4-macroalpha82@gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+
+Change the Anbernic RG35XX series to use the r_i2c bus for the PMIC
+instead of the r_rsb bus. This is to keep the device tree consistent
+as there are at least 3 devices (the RG35XX-SP, RG28XX, and RG40XX-H)
+that have an external RTC on the r_i2c bus.
+
+Signed-off-by: Chris Morgan <macromorgan@hotmail.com>
+Reviewed-by: Andre Przywara <andre.przywara@arm.com>
+Tested-by: Ryan Walklin <ryan@testtoast.com>
+---
+ .../boot/dts/allwinner/sun50i-h700-anbernic-rg35xx-2024.dts | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/arch/arm64/boot/dts/allwinner/sun50i-h700-anbernic-rg35xx-2024.dts b/arch/arm64/boot/dts/allwinner/sun50i-h700-anbernic-rg35xx-2024.dts
+index ee30584b6ad7..e2bbd22bd80a 100644
+--- a/arch/arm64/boot/dts/allwinner/sun50i-h700-anbernic-rg35xx-2024.dts
++++ b/arch/arm64/boot/dts/allwinner/sun50i-h700-anbernic-rg35xx-2024.dts
+@@ -201,12 +201,12 @@ &pio {
+ 	vcc-pi-supply = <&reg_cldo3>;
+ };
+ 
+-&r_rsb {
++&r_i2c {
+ 	status = "okay";
+ 
+-	axp717: pmic@3a3 {
++	axp717: pmic@34 {
+ 		compatible = "x-powers,axp717";
+-		reg = <0x3a3>;
++		reg = <0x34>;
+ 		interrupt-controller;
+ 		#interrupt-cells = <1>;
+ 		interrupt-parent = <&nmi_intc>;
+-- 
+2.34.1
+
+From git@z Thu Jan  1 00:00:00 1970
+Subject: [PATCH v3 4/4] arm64: dts: allwinner: h700: Add Anbernic RG35XX-SP
+From: Chris Morgan <macromorgan@hotmail.com>
+Date: Wed, 10 Jul 2024 18:17:18 -0500
+Message-Id: <20240710231718.106894-5-macroalpha82@gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+
+The Anbernic RG35XXSP is almost identical to the RG35XX-Plus, but in a
+clamshell form-factor. The key differences between the SP and the Plus
+is a lid switch and an RTC on the same i2c bus as the PMIC.
+
+Signed-off-by: Chris Morgan <macromorgan@hotmail.com>
+Reviewed-by: Andre Przywara <andre.przywara@arm.com>
+---
+ arch/arm64/boot/dts/allwinner/Makefile        |  3 +-
+ .../sun50i-h700-anbernic-rg35xx-sp.dts        | 34 +++++++++++++++++++
+ 2 files changed, 36 insertions(+), 1 deletion(-)
+ create mode 100644 arch/arm64/boot/dts/allwinner/sun50i-h700-anbernic-rg35xx-sp.dts
+
+diff --git a/arch/arm64/boot/dts/allwinner/Makefile b/arch/arm64/boot/dts/allwinner/Makefile
+index 0db7b60b49a1..00bed412ee31 100644
+--- a/arch/arm64/boot/dts/allwinner/Makefile
++++ b/arch/arm64/boot/dts/allwinner/Makefile
+@@ -49,5 +49,6 @@ dtb-$(CONFIG_ARCH_SUNXI) += sun50i-h618-orangepi-zero2w.dtb
+ dtb-$(CONFIG_ARCH_SUNXI) += sun50i-h618-orangepi-zero3.dtb
+ dtb-$(CONFIG_ARCH_SUNXI) += sun50i-h618-transpeed-8k618-t.dtb
+ dtb-$(CONFIG_ARCH_SUNXI) += sun50i-h700-anbernic-rg35xx-2024.dtb
+-dtb-$(CONFIG_ARCH_SUNXI) += sun50i-h700-anbernic-rg35xx-plus.dtb
+ dtb-$(CONFIG_ARCH_SUNXI) += sun50i-h700-anbernic-rg35xx-h.dtb
++dtb-$(CONFIG_ARCH_SUNXI) += sun50i-h700-anbernic-rg35xx-plus.dtb
++dtb-$(CONFIG_ARCH_SUNXI) += sun50i-h700-anbernic-rg35xx-sp.dtb
+diff --git a/arch/arm64/boot/dts/allwinner/sun50i-h700-anbernic-rg35xx-sp.dts b/arch/arm64/boot/dts/allwinner/sun50i-h700-anbernic-rg35xx-sp.dts
+new file mode 100644
+index 000000000000..0cf16dc903cd
+--- /dev/null
++++ b/arch/arm64/boot/dts/allwinner/sun50i-h700-anbernic-rg35xx-sp.dts
+@@ -0,0 +1,34 @@
++// SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
++/*
++ * Copyright (C) 2024 Ryan Walklin <ryan@testtoast.com>.
++ * Copyright (C) 2024 Chris Morgan <macroalpha82@gmail.com>.
++ */
++
++#include <dt-bindings/input/gpio-keys.h>
++#include "sun50i-h700-anbernic-rg35xx-plus.dts"
++
++/ {
++	model = "Anbernic RG35XX SP";
++	compatible = "anbernic,rg35xx-sp", "allwinner,sun50i-h700";
++
++	gpio-keys-lid {
++		compatible = "gpio-keys";
++
++		lid-switch {
++			label = "Lid Switch";
++			gpios = <&pio 4 7 GPIO_ACTIVE_LOW>; /* PE7 */
++			linux,can-disable;
++			linux,code = <SW_LID>;
++			linux,input-type = <EV_SW>;
++			wakeup-event-action = <EV_ACT_DEASSERTED>;
++			wakeup-source;
++		};
++	};
++};
++
++&r_i2c {
++	rtc_ext: rtc@51 {
++		compatible = "nxp,pcf8563";
++		reg = <0x51>;
++	};
++};
+-- 
+2.34.1
+

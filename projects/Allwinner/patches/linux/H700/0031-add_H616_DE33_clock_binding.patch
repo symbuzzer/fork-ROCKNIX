@@ -1,0 +1,34 @@
+From 4008f77b18ad9af32235725de72dfb586592e4d1 Mon Sep 17 00:00:00 2001
+From: Ryan Walklin <ryan@testtoast.com>
+Date: Sat, 27 Jul 2024 22:51:52 +1200
+Subject: [PATCH] dt-bindings: allwinner: add H616 DE33 clock binding
+
+The Allwinner H616 and variants have a new display engine revision
+(DE33).
+
+Add a clock binding for the DE33.
+
+Signed-off-by: Ryan Walklin <ryan@testtoast.com>
+Acked-by: Conor Dooley <conor.dooley@microchip.com>
+
+--
+Changelog v2..v3:
+- Separate content into three patches for three separate subsystems
+---
+ .../devicetree/bindings/clock/allwinner,sun8i-a83t-de2-clk.yaml  | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/Documentation/devicetree/bindings/clock/allwinner,sun8i-a83t-de2-clk.yaml b/Documentation/devicetree/bindings/clock/allwinner,sun8i-a83t-de2-clk.yaml
+index 70369bd633e4..7fcd55d468d4 100644
+--- a/Documentation/devicetree/bindings/clock/allwinner,sun8i-a83t-de2-clk.yaml
++++ b/Documentation/devicetree/bindings/clock/allwinner,sun8i-a83t-de2-clk.yaml
+@@ -25,6 +25,7 @@ properties:
+       - const: allwinner,sun50i-a64-de2-clk
+       - const: allwinner,sun50i-h5-de2-clk
+       - const: allwinner,sun50i-h6-de3-clk
++      - const: allwinner,sun50i-h616-de33-clk
+       - items:
+           - const: allwinner,sun8i-r40-de2-clk
+           - const: allwinner,sun8i-h3-de2-clk
+-- 
+2.45.2

@@ -1,0 +1,28 @@
+From 19e272f6e7a4ac909baab6d5892efa6b870f2153 Mon Sep 17 00:00:00 2001
+From: Ryan Walklin <ryan@testtoast.com>
+Date: Wed, 26 Jun 2024 22:55:30 +1200
+Subject: [PATCH] drm: panel: nv3052c: Correct WL-355608-A8 panel compatible
+
+As per the previous dt-binding commit, update the WL-355608-A8 panel
+compatible to reflect the the integrating device vendor.
+
+Signed-off-by: Ryan Walklin <ryan@testtoast.com>
+---
+ drivers/gpu/drm/panel/panel-newvision-nv3052c.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/drivers/gpu/drm/panel/panel-newvision-nv3052c.c b/drivers/gpu/drm/panel/panel-newvision-nv3052c.c
+index c5d3ead38555..2da1e924177a 100644
+--- a/drivers/gpu/drm/panel/panel-newvision-nv3052c.c
++++ b/drivers/gpu/drm/panel/panel-newvision-nv3052c.c
+@@ -925,7 +925,7 @@ MODULE_DEVICE_TABLE(spi, nv3052c_ids);
+ static const struct of_device_id nv3052c_of_match[] = {
+ 	{ .compatible = "leadtek,ltk035c5444t", .data = &ltk035c5444t_panel_info },
+ 	{ .compatible = "fascontek,fs035vg158", .data = &fs035vg158_panel_info },
+-	{ .compatible = "wl-355608-a8", .data = &wl_355608_a8_panel_info },
++	{ .compatible = "anbernic,wl-355608-a8", .data = &wl_355608_a8_panel_info },
+ 	{ /* sentinel */ }
+ };
+ MODULE_DEVICE_TABLE(of, nv3052c_of_match);
+-- 
+2.45.2
