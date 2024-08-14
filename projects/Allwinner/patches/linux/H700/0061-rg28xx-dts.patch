@@ -1,7 +1,19 @@
-diff -rupN linux.orig/arch/arm64/boot/dts/allwinner/Makefile linux/arch/arm64/boot/dts/allwinner/Makefile
---- linux.orig/arch/arm64/boot/dts/allwinner/Makefile	2024-07-26 18:22:47.474113725 +0000
-+++ linux/arch/arm64/boot/dts/allwinner/Makefile	2024-07-26 22:24:48.531627218 +0000
-@@ -49,6 +49,6 @@ dtb-$(CONFIG_ARCH_SUNXI) += sun50i-h618-
+From ea6ee677f0ce1d1ec73f7c1d7b5b12a5d8fd0468 Mon Sep 17 00:00:00 2001
+From: Philippe Simons <simons.philippe@gmail.com>
+Date: Wed, 14 Aug 2024 19:06:41 +0200
+Subject: [PATCH] add rg28xx dts
+
+---
+ arch/arm64/boot/dts/allwinner/Makefile        |  2 +-
+ .../allwinner/sun50i-h700-anbernic-rg28xx.dts | 38 +++++++++++++++++++
+ 2 files changed, 39 insertions(+), 1 deletion(-)
+ create mode 100644 arch/arm64/boot/dts/allwinner/sun50i-h700-anbernic-rg28xx.dts
+
+diff --git a/arch/arm64/boot/dts/allwinner/Makefile b/arch/arm64/boot/dts/allwinner/Makefile
+index 00bed412e..f7eb13afd 100644
+--- a/arch/arm64/boot/dts/allwinner/Makefile
++++ b/arch/arm64/boot/dts/allwinner/Makefile
+@@ -49,6 +49,6 @@ dtb-$(CONFIG_ARCH_SUNXI) += sun50i-h618-orangepi-zero2w.dtb
  dtb-$(CONFIG_ARCH_SUNXI) += sun50i-h618-orangepi-zero3.dtb
  dtb-$(CONFIG_ARCH_SUNXI) += sun50i-h618-transpeed-8k618-t.dtb
  dtb-$(CONFIG_ARCH_SUNXI) += sun50i-h700-anbernic-rg35xx-2024.dtb
@@ -9,9 +21,11 @@ diff -rupN linux.orig/arch/arm64/boot/dts/allwinner/Makefile linux/arch/arm64/bo
  dtb-$(CONFIG_ARCH_SUNXI) += sun50i-h700-anbernic-rg35xx-plus.dtb
  dtb-$(CONFIG_ARCH_SUNXI) += sun50i-h700-anbernic-rg35xx-sp.dtb
 +dtb-$(CONFIG_ARCH_SUNXI) += sun50i-h700-anbernic-rg28xx.dtb
-diff -rupN linux.orig/arch/arm64/boot/dts/allwinner/sun50i-h700-anbernic-rg28xx.dts linux/arch/arm64/boot/dts/allwinner/sun50i-h700-anbernic-rg28xx.dts
---- linux.orig/arch/arm64/boot/dts/allwinner/sun50i-h700-anbernic-rg28xx.dts	1970-01-01 00:00:00.000000000 +0000
-+++ linux/arch/arm64/boot/dts/allwinner/sun50i-h700-anbernic-rg28xx.dts	2024-07-26 23:14:22.651172006 +0000
+diff --git a/arch/arm64/boot/dts/allwinner/sun50i-h700-anbernic-rg28xx.dts b/arch/arm64/boot/dts/allwinner/sun50i-h700-anbernic-rg28xx.dts
+new file mode 100644
+index 000000000..748604170
+--- /dev/null
++++ b/arch/arm64/boot/dts/allwinner/sun50i-h700-anbernic-rg28xx.dts
 @@ -0,0 +1,38 @@
 +// SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
 +/*
@@ -51,3 +65,6 @@ diff -rupN linux.orig/arch/arm64/boot/dts/allwinner/sun50i-h700-anbernic-rg28xx.
 +    };
 +
 +};
+-- 
+2.34.1
+
