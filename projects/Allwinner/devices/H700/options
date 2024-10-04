@@ -64,7 +64,7 @@
     DISPLAYSERVER="wl"
 
   # Windowmanager to use (weston / swaywm-env / no)
-    WINDOWMANAGER="swaywm-env"
+    WINDOWMANAGER="weston"
   
   # kernel serial console
     EXTRA_CMDLINE="quiet rootwait console=ttyFIQ0 console=tty0 ssh consoleblank=0 systemd.show_status=0 loglevel=0 panic=20"
@@ -88,3 +88,6 @@
 
   # debug tty path
     DEBUG_TTY="/dev/ttyFIQ0"
+
+  # build with swap support (yes / no)
+    SWAP_SUPPORT="no"
