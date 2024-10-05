@@ -19,7 +19,7 @@ do
   fi
 done
 
-for SYSTEM in gb gbc gba snes nes sms gamegear genesis mastersystem sega32x megadrive segacd megacd
+for SYSTEM in gb gbc snes nes sms gamegear genesis mastersystem sega32x megadrive segacd megacd
 do
   CPU_SETTING=$(get_setting ${SYSTEM}.cpugovernor)
   if [ -z ${CPU_SETTING} ]
