@@ -1,14 +1,14 @@
-From 9ab1071aee2b88adccf0af208ef773e671d4b47c Mon Sep 17 00:00:00 2001
+From 4ae219d804409c4056741c551a5b7d363d18de79 Mon Sep 17 00:00:00 2001
 From: Philippe Simons <simons.philippe@gmail.com>
 Date: Sun, 20 Oct 2024 22:07:22 +0200
-Subject: [PATCH 2/2] rg35xx 2024: enable gpu
+Subject: [PATCH] rg35xx 2024: enable gpu
 
 ---
- .../sun50i-h700-anbernic-rg35xx-2024.dts      | 36 +++++++++++++++++++
- 1 file changed, 36 insertions(+)
+ .../sun50i-h700-anbernic-rg35xx-2024.dts      | 49 +++++++++++++++++++
+ 1 file changed, 49 insertions(+)
 
 diff --git a/arch/arm64/boot/dts/allwinner/sun50i-h700-anbernic-rg35xx-2024.dts b/arch/arm64/boot/dts/allwinner/sun50i-h700-anbernic-rg35xx-2024.dts
-index 926367e52..1d220a00a 100644
+index 926367e52..4b2848310 100644
 --- a/arch/arm64/boot/dts/allwinner/sun50i-h700-anbernic-rg35xx-2024.dts
 +++ b/arch/arm64/boot/dts/allwinner/sun50i-h700-anbernic-rg35xx-2024.dts
 @@ -175,6 +175,35 @@ reg_vcc5v: regulator-vcc5v { /* USB-C power input */
@@ -47,15 +47,28 @@ index 926367e52..1d220a00a 100644
  };
  
  &codec {
-@@ -184,6 +213,13 @@ &codec {
+@@ -184,6 +213,26 @@ &codec {
  	status = "okay";
  };
  
 +&gpu {
-+	mali-supply = <&reg_dcdc2>;
-+	power-domains = <&r_ccu 0>;
-+	operating-points-v2 = <&gpu_opp_table>;
++	clocks = <&ccu /* CLK_PLL_GPU */ 8>, <&ccu CLK_GPU0>, <&ccu CLK_GPU1>, <&ccu CLK_BUS_GPU>;
++	clock-names = "clk_parent", "clk_mali", "clk_bak", "clk_bus";
++	gpu_idle = <1>;
++	dvfs_status = <1>;
++	operating-points = <0x9e340 0xea600 0x927c0 0xdbba0 0x86c40 0xdbba0 0x7b0c0 0xdbba0 0x6f540 0xdbba0 0x668a0 0xdbba0>;
++   #cooling-cells = <2>;
 +	status = "okay";
++
++	ipa_dvfs {
++		compatible = "arm,mali-simple-power-model";
++		static-coefficient = <0x4268>;
++		dynamic-coefficient = <0x2ee>;
++		ts = <0x3e2da 0x2568 0xffffff98 0x04>;
++		thermal-zone = "gpu-thermal";
++		ss-coefficient = <0x24>;
++		ff-coefficient = <0x123>;
++	};	
 +};
 +
  &cpu0 {

@@ -10,9 +10,18 @@ PKG_LONGDESC="mali-bifrost: Linux drivers for Mali Bifrost GPUs"
 PKG_TOOLCHAIN="manual"
 PKG_IS_KERNEL_PKG="yes"
 
+case ${DEVICE} in
+  H700)
+    PLATFORM_NAME=sunxi
+    ;;
+  *)
+    PLATFORM_NAME=meson
+    ;;
+esac
+
 make_target() {
   kernel_make KDIR=$(kernel_path) -C ${PKG_BUILD} \
-       CONFIG_MALI_MIDGARD=m CONFIG_MALI_PLATFORM_NAME=meson CONFIG_MALI_REAL_HW=y CONFIG_MALI_DEVFREQ=y CONFIG_MALI_GATOR_SUPPORT=y
+       CONFIG_MALI_MIDGARD=m CONFIG_MALI_PLATFORM_NAME=${PLATFORM_NAME} CONFIG_MALI_REAL_HW=y CONFIG_MALI_DEVFREQ=y CONFIG_MALI_GATOR_SUPPORT=y
 }
 
 makeinstall_target() {

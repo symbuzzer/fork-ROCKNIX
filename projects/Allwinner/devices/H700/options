@@ -38,9 +38,9 @@
     HW_CPU="Allwinner H700"
 
   # Mali GPU family
-    MALI_FAMILY="g31"
+    MALI_FAMILY="bifrost-g31"
     MALI_VERSION="g13p0"
-    GRAPHIC_DRIVERS="panfrost"
+    GRAPHIC_DRIVERS="mali panfrost"
 
   # OpenGL(X) implementation to use (mesa / no)
     OPENGL="mesa"
@@ -59,3 +59,13 @@
   
   # build and install rocknix joypad driver (yes / no)
     ROCKNIX_JOYPAD="yes"
+
+  # additional packages to install
+    ADDITIONAL_PACKAGES="libmali"
+    ADDITIONAL_PACKAGES_32BIT="libmali"
+
+  # additional drivers to install:
+  # for a list of additional drivers see packages/linux-drivers
+  # Space separated list is supported,
+  # e.g. ADDITIONAL_DRIVERS="DRIVER1 DRIVER2"
+    ADDITIONAL_DRIVERS="mali-bifrost"
